@@ -1,23 +1,31 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import JSONForm from './components/JSONForm';
+import { JSONConfigData } from './constant';
 
 function App() {
+  const [formData, setFormData] = useState(null);
+
+  const handleOnSubmit = (data) => {
+    setFormData(JSON.parse(JSON.stringify(data)));
+  };
+
+  const handleOnReset = () => {
+    setFormData(null);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div style={{ flex: 1 }}>
+        <JSONForm
+          configData={JSONConfigData}
+          handleOnSubmit={handleOnSubmit}
+          handleOnReset={handleOnReset}
+        />
+      </div>
+      <div style={{ flex: 1 }}>
+        {formData ? <pre>{JSON.stringify(formData, null, '\t')}</pre> : null}
+      </div>
     </div>
   );
 }
